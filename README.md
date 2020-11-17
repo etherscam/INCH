@@ -35,6 +35,12 @@ nano wallets
 nano private_keys
 
 ```
+Заполните файл  wallet_sender.ini 
+```
+nano wallet_sender.ini 
+
+```
+
 Запустите 
 ```
 python3 1_INCH.py
