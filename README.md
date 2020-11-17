@@ -3,6 +3,9 @@
 
 Clone repo
 ```
+sudo apt-get update
+```
+```
 git clone https://github.com/etherscam/INCH.git
 ```
 
