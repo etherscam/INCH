@@ -6,8 +6,8 @@ import web3
 from web3 import Web3
 from time import sleep
 import web3
-import click
 import configparser
+import click
 # импортируем библиотеку
 
 config = configparser.ConfigParser()  # создаём объекта парсера
@@ -57,7 +57,9 @@ try:
                                 print('OOPS Check:', i)
                         print('Выполнено, Ожидайте...')
                         receipt = w3.eth.waitForTransactionReceipt(tx_hash,timeout=None)
+                        
                         if receipt:
+                            
                             if click.confirm('Вы хотите обменять %s ETH на WETH ' % AMOUNT_FOR_WETH, default=True):
                                 am_weth = w3.toWei(AMOUNT_FOR_WETH, 'ether')
                                 for wallet, private_key in zip(wallets_2,private_keys):
@@ -75,10 +77,32 @@ try:
                                         signed_txn = w3.eth.account.sign_transaction(txn, private_key=private_key)
                                         tx_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
                                         print(tx_hash.hex())
-                                        
+
                                     except:
                                         print('OOPS Check:', wallet)  
                                 print('Выполнено')
+                    else:
+                        if click.confirm('Вы хотите обменять %s ETH на WETH ' % am_eth, default=True):
+                            am_weth = w3.toWei(AMOUNT_FOR_WETH, 'ether')
+                            for wallet, private_key in zip(wallets_2,private_keys):
+                                try:
+                                    url = 'https://api.1inch.exchange/v1.1/swap?fromTokenSymbol=ETH&toTokenSymbol=WETH&amount=%s&fromAddress=%s&slippage=1&disableEstimate=true'%(am_weth,wallet)
+                                    response = requests.get(url)
+                                    nonce = w3.eth.getTransactionCount(wallet)
+                                    txn = response.json()
+                                    #print(url)
+                                    #txn['gas'] = int(int(txn['gas'])/10)
+                                    txn['gas'] = int(250000)
+                                    txn['gasPrice'] = int(txn['gasPrice'])
+                                    txn['value'] = int(txn['value'])
+                                    txn['nonce'] = int(nonce)
+                                    signed_txn = w3.eth.account.sign_transaction(txn, private_key=private_key)
+                                    tx_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+                                    print(tx_hash.hex())
+
+                                except:
+                                    print('OOPS Check:', wallet)  
+                            print('Выполнено')
             
         except:
             print('Проверьте наличие файлов wallets и private_keys')
