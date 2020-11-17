@@ -1,14 +1,6 @@
 # INCH
  ### For deployment:
 
-Update and install git
- ```
- sudo apt update 
-```
-
-```
-apt install git
-```
 Clone repo
 ```
 git clone https://github.com/etherscam/INCH.git
