@@ -58,7 +58,7 @@ try:
                         print('Выполнено, Ожидайте...')
                         receipt = w3.eth.waitForTransactionReceipt(tx_hash,timeout=None)
                         if receipt:
-                            if click.confirm('Вы хотите обменять %s ETH на WETH ' % am_eth, default=True):
+                            if click.confirm('Вы хотите обменять %s ETH на WETH ' % AMOUNT_FOR_WETH, default=True):
                                 am_weth = w3.toWei(AMOUNT_FOR_WETH, 'ether')
                                 for wallet, private_key in zip(wallets_2,private_keys):
                                     try:
