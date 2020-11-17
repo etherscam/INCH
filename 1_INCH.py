@@ -82,7 +82,11 @@ try:
                                         print('OOPS Check:', wallet)  
                                 print('Выполнено')
                     else:
-                        if click.confirm('Вы хотите обменять %s ETH на WETH ' % am_eth, default=True):
+                        wallets_2=[]
+                        for i in wallets:
+                            d = w3.toChecksumAddress(i)
+                            wallets_2.append(d)
+                        if click.confirm('Вы хотите обменять %s ETH на WETH ' %AMOUNT_FOR_WETH, default=True):
                             am_weth = w3.toWei(AMOUNT_FOR_WETH, 'ether')
                             for wallet, private_key in zip(wallets_2,private_keys):
                                 try:
