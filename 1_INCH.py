@@ -59,9 +59,14 @@ try:
                         receipt = w3.eth.waitForTransactionReceipt(tx_hash,timeout=None)
                         
                         if receipt:
+                            sleep(7)
                             
                             if click.confirm('Вы хотите обменять %s ETH на WETH ' % AMOUNT_FOR_WETH, default=True):
                                 am_weth = w3.toWei(AMOUNT_FOR_WETH, 'ether')
+                                wallets_2=[]
+                                for i in wallets:
+                                    d = w3.toChecksumAddress(i)
+                                    wallets_2.append(d)
                                 for wallet, private_key in zip(wallets_2,private_keys):
                                     try:
                                         url = 'https://api.1inch.exchange/v1.1/swap?fromTokenSymbol=ETH&toTokenSymbol=WETH&amount=%s&fromAddress=%s&slippage=1&disableEstimate=true'%(am_weth,wallet)
