@@ -38,7 +38,7 @@ try:
                             d = w3.toChecksumAddress(i)
                             wallets_2.append(d)
                         am = w3.toWei(am_eth, 'ether')
-                        nonce = w3.eth.getTransactionCount(my_wallet)
+                        nonce = w3.eth.getTransactionCount(w3.toChecksumAddress(my_wallet))
                         for i in wallets_2:
                             try:
                                 txn =dict({
